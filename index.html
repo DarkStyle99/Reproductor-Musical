@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor de Música</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #song-list {
+            width: 30%;
+        }
+        #song-info {
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .controls {
+            margin-top: 20px;
+        }
+        button {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="song-list">
+        <h2>Lista de Canciones</h2>
+        <div id="songs"></div>
+    </div>
+    <div id="song-info"></div>
+    <div class="controls">
+        <button onclick="reproductor.playPause()">Reproducir/Pausar</button>
+        <button onclick="reproductor.stop()">Detener</button>
+        <button onclick="reproductor.shuffle()">Aleatorio</button>
+        <button onclick="reproductor.prev()">Anterior</button>
+        <button onclick="reproductor.next()">Siguiente</button>
+    </div>
+
+    <script>
+        // Mostrar lista de canciones al cargar la página
+        document.getElementById("songs").innerHTML = reproductor.songsList();
+        // Mostrar información de la canción actual
+        reproductor.showSongInSite();
+    </script>
+</body>
+</html>
