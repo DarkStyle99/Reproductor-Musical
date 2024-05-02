@@ -21,6 +21,19 @@ function detenerCancion() {
       this.ahoraSuena = -1;
     }
 
+    play(index) {
+        if (index >= 0 && index < this.canciones.length) {
+            this.ahoraSuena = index;
+            const cancionActual = this.canciones[this.ahoraSuena];
+            console.log("Reproduciendo: " + cancionActual.nombre);
+            this.showSongInSite();
+            audioPlayer.src = cancionActual.archivo; // Establecer la fuente de la canción
+            audioPlayer.play(); // Reproducir la canción
+        } else {
+            console.log("Índice de canción fuera de rango.");
+        }
+    }
+
     play(songName) {
         // Buscar el índice de la canción por su nombre
         const index = this.canciones.findIndex(cancion => cancion.nombre === songName);
@@ -74,7 +87,7 @@ function detenerCancion() {
         this.ahoraSuena = song;
       } else {
         // Buscar el número de la canción por su nombre
-        this.ahoraSuena = this.canciones.findIndex(cancion => cancion.nombreCancion === song);
+        this.ahoraSuena = this.canciones.findIndex(cancion => cancion.nombre === song);
       }
       this.showSongInSite();
     }
@@ -98,6 +111,7 @@ function detenerCancion() {
           <p>Álbum: ${cancionActual.album}</p>
           <p>Artista: ${cancionActual.artista}</p>
           <p>Duración: ${cancionActual.duracion}</p>
+          <audio controls src="${cancionActual.archivo}"></audio>
         `;
       } else {
         songInfo.innerHTML = ""; // No hay canción seleccionada
@@ -111,7 +125,7 @@ function detenerCancion() {
         nombre: "Shatter Me",
         album: "Shatter Me",
         artista: "Lindsey Stirling ft. Lzzy Hale",
-        duracion: "4:41",
+        duracion: "4:40",
         imagen: "https://e-cdn-images.dzcdn.net/images/cover/f490c2fc6c85a48c604ef0accb53521a/500x500-000000-80-0-0.jpg",
         archivo: "audio/Shatter Me.mp3"
     },
@@ -135,7 +149,7 @@ function detenerCancion() {
         nombre: "Club Can’t Handle Me",
         album: "Club Can't Handle Me",
         artista: "Flo Rida feat. David Guetta",
-        duracion: "3:54",
+        duracion: "3:52",
         imagen: "https://e-cdn-images.dzcdn.net/images/cover/a2fbe9617951f25d9e0f54dbcd60b7e5/500x500-000000-80-0-0.jpg",
         archivo: "audio/Club Can t Handle Me.mp3"
     },
@@ -143,7 +157,7 @@ function detenerCancion() {
         nombre: "Do or Die",
         album: "Do or Die",
         artista: "Natalie Jane",
-        duracion: "3:50",
+        duracion: "2:30",
         imagen: "https://m.media-amazon.com/images/I/51G2SNbcYHL._UXNaN_FMjpg_QL85_.jpg",
         archivo: "audio/Do Or Die.mp3"
     },
@@ -175,7 +189,7 @@ function detenerCancion() {
         nombre: "Who I Am",
         album: "Who I Am",
         artista: "Alan Walker",
-        duracion: "3:13",
+        duracion: "3:31",
         imagen: "https://e-cdn-images.dzcdn.net/images/cover/d3c5df538cbff19074f036f5076a464d/500x500-000000-80-0-0.jpg",
         archivo: "audio/Who I Am.mp3"
     },
@@ -183,7 +197,7 @@ function detenerCancion() {
         nombre: "Love Me Hard",
         album: "Love Me Hard",
         artista: "Elley Duhe",
-        duracion: "3:38",
+        duracion: "3:40",
         imagen: "https://e-cdn-images.dzcdn.net/images/cover/e4db45682f5ca77f0b98282b634b4f23/500x500-000000-80-0-0.jpg",
         archivo: "audio/LOVE ME HARD.mp3"
     },
@@ -191,7 +205,7 @@ function detenerCancion() {
         nombre: "Tears of Gold",
         album: "Tears of Gold",
         artista: "Fouzia",
-        duracion: "2:56",
+        duracion: "2:55",
         imagen: "https://e-cdn-images.dzcdn.net/images/cover/95202fa80f6b998650e15b4fb91722d1/500x500-000000-80-0-0.jpg",
         archivo: "audio/Tears of Gold.mp3"
     },
@@ -207,7 +221,7 @@ function detenerCancion() {
         nombre: "Without Me",
         album: "Without Me",
         artista: "Halsey",
-        duracion: "3:21",
+        duracion: "3:23",
         imagen: "https://e-cdn-images.dzcdn.net/images/cover/fce4df7f3dd3f3daf83ffff8015c005f/500x500-000000-80-0-0.jpg",
         archivo: "audio/Without Me.mp3"
     },
@@ -223,10 +237,17 @@ function detenerCancion() {
         nombre: "Unstoppable",
         album: "Unstoppable",
         artista: "Sia",
-        duracion: "3:37",
+        duracion: "3:40",
         imagen: "https://e-cdn-images.dzcdn.net/images/cover/5a86a131864e4bfdda6c45c31fdbee3d/500x500-000000-80-0-0.jpg",
         archivo: "audio/Unstoppable.mp3"
     }
   ];
   
   const reproductor = new Reproductor(canciones);
+
+    // Obtener el elemento donde se mostrará la lista de canciones
+    const songsListContainer = document.getElementById("songs-list");
+    // Generar la lista de canciones
+    songsListContainer.innerHTML = reproductor.songsList();
+    // Mostrar la información de la primera canción por defecto
+    reproductor.showSongInSite();
